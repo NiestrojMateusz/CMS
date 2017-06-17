@@ -5,6 +5,7 @@ GEM
     coderay (1.1.1)
     erubis (2.7.0)
     method_source (0.8.2)
+    minitest (5.10.1)
     multi_json (1.12.1)
     mustermann (1.0.0)
     pry (0.10.4)
@@ -14,6 +15,9 @@ GEM
     rack (2.0.3)
     rack-protection (2.0.0)
       rack
+    rack-test (0.6.3)
+      rack (>= 1.0)
+    redcarpet (3.4.0)
     sinatra (2.0.0)
       mustermann (~> 1.0)
       rack (~> 2.0)
@@ -34,7 +38,10 @@ PLATFORMS
 
 DEPENDENCIES
   erubis
+  minitest
   pry
+  rack-test
+  redcarpet
   sinatra
   sinatra-contrib
 
