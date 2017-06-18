@@ -3,7 +3,7 @@ require "sinatra/reloader"
 require "tilt/erubis"
 require "pry"
 require "redcarpet"
-root = File.expand_path(".." ,__FILE__) 
+require "pry-remote"
 
 configure do
   enable :sessions # tells sinatra to enable a sessions support
@@ -15,8 +15,17 @@ def markdown_render(text)
   markdown.render(text)
 end
 
+def data_path
+  if ENV["RACK_ENV"] == "test"
+    File.expand_path("../test/data", __FILE__)
+  else
+    File.expand_path("../data", __FILE__)
+  end
+end
+
 get "/" do
-  @files = Dir["data/*"].map do |path|
+  pattern = File.join(data_path, "*")
+  @files =Dir.glob(pattern).map do |path|
     File.basename(path)
   end
 
@@ -24,7 +33,7 @@ get "/" do
 end
 
 get "/:filename" do
-  file_path = root + "/data/" + params[:filename]
+  file_path = File.join(data_path, params[:filename])
   if File.file?(file_path)
 
     if File.extname(file_path) == ".md"
@@ -37,5 +46,17 @@ get "/:filename" do
     session[:message] = "#{params[:filename]} does not exist."
     redirect "/"
   end
+end
 
+get "/:filename/edit" do
+  file_path = File.join(data_path, params[:filename])
+  @file_content = File.read(file_path)
+  erb :edit
+end
+
+post "/:filename" do
+  file_path = File.join(data_path, params[:filename])
+  File.write(file_path, params[:content])
+  session[:message] = "#{params[:filename]} has been updated."
+  redirect "/"
 end

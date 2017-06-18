@@ -2,6 +2,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     backports (3.8.0)
+    byebug (9.0.6)
     coderay (1.1.1)
     erubis (2.7.0)
     method_source (0.8.2)
@@ -12,6 +13,12 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    pry-byebug (3.4.2)
+      byebug (~> 9.0)
+      pry (~> 0.10)
+    pry-remote (0.1.8)
+      pry (~> 0.9)
+      slop (~> 3.0)
     rack (2.0.3)
     rack-protection (2.0.0)
       rack
@@ -40,6 +47,8 @@ DEPENDENCIES
   erubis
   minitest
   pry
+  pry-byebug
+  pry-remote
   rack-test
   redcarpet
   sinatra

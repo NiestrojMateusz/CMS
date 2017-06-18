@@ -5,6 +5,9 @@
   <% @files.each do |file| %>
     <li>
       <a href="/<%= file %>"><%= file %></a>
+      <form action="/<%= file  %>/edit" method="get">
+        <button type="submit">Edit</button>
+      </form>
    </li>
   <% end %>
 </ul>
