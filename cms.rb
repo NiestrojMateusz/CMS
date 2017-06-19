@@ -32,9 +32,29 @@ get "/" do
    erb :index, layout: :layout
 end
 
+# Display view for creating new file
 get "/new" do
   erb :new, layout: :layout
 end
+
+# Create new file
+post "/create" do
+  filename = params[:new_document].to_s
+
+  if filename.size == 0 
+    session[:message] = "The file name is required"
+    status 422
+    erb :new
+  else 
+    file_path = File.join(data_path, filename)
+
+    session[:message] = "#{filename} has been created."
+
+    File.write(file_path, "")
+    redirect "/"
+  end
+end
+
 
 get "/:filename" do
   file_path = File.join(data_path, params[:filename])
@@ -42,10 +62,11 @@ get "/:filename" do
 
     if File.extname(file_path) == ".md"
       erb markdown_render(File.read(file_path))
-    else
+    elsif File.extname(file_path) == ".txt"
       headers["Content-Type"] = "text/plain"
       File.read(file_path)
     end
+
   else
     session[:message] = "#{params[:filename]} does not exist."
     redirect "/"
@@ -62,6 +83,15 @@ post "/:filename" do
   file_path = File.join(data_path, params[:filename])
   File.write(file_path, params[:content])
   session[:message] = "#{params[:filename]} has been updated."
+  redirect "/"
+end
+
+# Delete file
+post "/:filename/delete" do
+  filename = params[:filename].to_s
+  file_path = File.join(data_path, params[:filename])
+  File.delete(file_path)
+  session[:message] = "#{filename} has been deleted"
   redirect "/"
 end
 

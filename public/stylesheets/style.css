@@ -8,7 +8,7 @@ body {
   background: #FFFF99;
 }
 
-.edit_btn {
+ul form {
   display: inline-block;
 }
 form label {

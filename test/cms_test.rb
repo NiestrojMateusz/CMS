@@ -89,4 +89,42 @@ class CmsTest < Minitest::Test
     assert_equal 200, last_response.status
     assert_includes last_response.body, "new content"
   end
+  
+  def test_view_new_document_form
+    get "/new"
+
+    assert_equal 200, last_response.status
+    assert_includes last_response.body, '<form action="/create"'
+  end
+
+  def test_create_new_file
+    post "/create", new_document: "test.txt"
+
+    assert_equal 302, last_response.status
+
+    get last_response["Location"]
+    assert_includes last_response.body, "test.txt has been created"
+
+    get "/"
+    assert_includes last_response.body, "test.txt" 
+  end
+
+  def test_create_new_document_without_filename
+    post "/create", filename: ""
+    assert_equal 422, last_response.status
+    assert_includes last_response.body, "The file name is required"
+  end
+
+  def test_delete_file
+    create_document "history.txt"
+    post "/history.txt/delete"
+
+    assert_equal 302, last_response.status
+
+    get last_response["Location"]
+    assert_includes last_response.body, "history.txt has been deleted"
+
+    get "/"
+    refute_includes last_response.body, "history.txt"
+  end
 end
