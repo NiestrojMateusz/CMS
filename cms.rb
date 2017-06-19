@@ -95,3 +95,6 @@ post "/:filename/delete" do
   redirect "/"
 end
 
+get "/users/singin" do
+  erb :singin
+end
