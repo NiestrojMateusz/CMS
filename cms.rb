@@ -29,7 +29,11 @@ get "/" do
     File.basename(path)
   end
 
-   erb :index
+   erb :index, layout: :layout
+end
+
+get "/new" do
+  erb :new, layout: :layout
 end
 
 get "/:filename" do
@@ -37,7 +41,7 @@ get "/:filename" do
   if File.file?(file_path)
 
     if File.extname(file_path) == ".md"
-      markdown_render(File.read(file_path))
+      erb markdown_render(File.read(file_path))
     else
       headers["Content-Type"] = "text/plain"
       File.read(file_path)
@@ -60,3 +64,4 @@ post "/:filename" do
   session[:message] = "#{params[:filename]} has been updated."
   redirect "/"
 end
+

@@ -1,0 +1,20 @@
+body {
+  padding: 1em;
+  font-family: sans-serif;
+}
+
+.message {
+  padding: 10px;
+  background: #FFFF99;
+}
+
+.edit_btn {
+  display: inline-block;
+}
+form label {
+  display: block;
+}
+
+form input[type="text"] {
+  display: block;
+}

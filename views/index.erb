@@ -1,15 +1,14 @@
-<% if session[:message] %>
-  <p><%= session.delete(:message) %></p>
-<% end %>
 <ul>
   <% @files.each do |file| %>
     <li>
       <a href="/<%= file %>"><%= file %></a>
-      <form action="/<%= file  %>/edit" method="get">
+      <form class="edit_btn" action="/<%= file  %>/edit" method="get">
         <button type="submit">Edit</button>
       </form>
    </li>
   <% end %>
 </ul>
+
+<a href="/new">New document</a>
 
 
