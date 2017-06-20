@@ -14,8 +14,19 @@
 
 <a href="/new">New document</a>
 
-<form action="/users/singin" method="get">
-    <button type="submit">Sing In</button>
-</form>
+<% if session[:username] %>
+  <form action="/users/signout" method="post">
+    <p class="user-status">
+      Signed in as <%= session[:username] %>
+      <button type="submit">Sign Out</button>
+    </p>
+  </form>
+<% else %>
+  <form action="/users/signin" method="get">
+    <p class="user-status">
+      <button type="submit">Sign In</button>
+    </p>
+  </form>
+<% end %>
 
 
