@@ -18,3 +18,8 @@ form label {
 form input[type="text"] {
   display: block;
 }
+
+.user-status {
+  font-style: italic;
+  font-size: 0.9em;
+}
